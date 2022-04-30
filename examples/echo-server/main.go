@@ -24,7 +24,7 @@ func main() {
 	flag.IntVar(&port, "port", 5000, "server port")
 	flag.BoolVar(&udp, "udp", false, "listen on udp")
 	flag.BoolVar(&reuseport, "reuseport", false, "reuseport (SO_REUSEPORT)")
-	flag.BoolVar(&trace, "trace", false, "print packets to console")
+	flag.BoolVar(&trace, "trace", true, "print packets to console")
 	flag.IntVar(&loops, "loops", 0, "num loops")
 	flag.BoolVar(&stdlib, "stdlib", false, "use stdlib")
 	flag.Parse()
@@ -43,7 +43,7 @@ func main() {
 	}
 	events.Data = func(c evio.Conn, in []byte) (out []byte, action evio.Action) {
 		if trace {
-			log.Printf("%s", strings.TrimSpace(string(in)))
+			log.Printf("%s, %v", strings.TrimSpace(string(in)), action)
 		}
 		out = in
 		return
