@@ -5,6 +5,7 @@
 package internal
 
 import (
+	"fmt"
 	"syscall"
 	"unsafe"
 )
@@ -54,7 +55,9 @@ func (p *Poll) Trigger(note interface{}) error {
 func (p *Poll) Wait(iter func(fd int, note interface{}) error) error {
 	events := make([]syscall.EpollEvent, 64)
 	for {
+		fmt.Println("before: epoll wait")
 		n, err := syscall.EpollWait(p.fd, events, -1)
+		fmt.Println("after: epoll wait")
 		if err != nil && err != syscall.EINTR {
 			return err
 		}
