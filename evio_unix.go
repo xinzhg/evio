@@ -2,11 +2,13 @@
 // Use of this source code is governed by an MIT-style
 // license that can be found in the LICENSE file.
 
+//go:build darwin || netbsd || freebsd || openbsd || dragonfly || linux
 // +build darwin netbsd freebsd openbsd dragonfly linux
 
 package evio
 
 import (
+	"fmt"
 	"io"
 	"net"
 	"os"
@@ -225,7 +227,7 @@ func loopRun(s *server, l *loop) {
 		go loopTicker(s, l)
 	}
 
-	//fmt.Println("-- loop started --", l.idx)
+	fmt.Println("-- loop started --", l.idx)
 	l.poll.Wait(func(fd int, note interface{}) error {
 		if fd == 0 {
 			return loopNote(s, l, note)
