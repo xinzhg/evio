@@ -229,6 +229,7 @@ func loopRun(s *server, l *loop) {
 
 	fmt.Println("-- loop started --", l.idx)
 	l.poll.Wait(func(fd int, note interface{}) error {
+		fmt.Println("inner loop")
 		if fd == 0 {
 			return loopNote(s, l, note)
 		}
