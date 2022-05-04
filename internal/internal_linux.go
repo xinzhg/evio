@@ -67,6 +67,7 @@ func (p *Poll) Wait(iter func(fd int, note interface{}) error) error {
 			return err
 		}
 		for i := 0; i < n; i++ {
+			fmt.Println("looping events")
 			if fd := int(events[i].Fd); fd != p.wfd {
 				fmt.Println("iter:", iter)
 				if err := iter(fd, nil); err != nil {
