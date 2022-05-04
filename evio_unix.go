@@ -236,14 +236,19 @@ func loopRun(s *server, l *loop) {
 		c := l.fdconns[fd]
 		switch {
 		case c == nil:
+			fmt.Println("loop accept")
 			return loopAccept(s, l, fd)
 		case !c.opened:
+			fmt.Println("loop opened")
 			return loopOpened(s, l, c)
 		case len(c.out) > 0:
+			fmt.Println("loop write")
 			return loopWrite(s, l, c)
 		case c.action != None:
+			fmt.Println("loop action")
 			return loopAction(s, l, c)
 		default:
+			fmt.Println("loop read")
 			return loopRead(s, l, c)
 		}
 	})
